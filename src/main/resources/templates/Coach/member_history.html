@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>member history</title>
+    <link rel="stylesheet" th:href="@{/css/coach/memberHistory.css}">
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1>Gym Management and Online Coaching Platform</h1>
+    </div>
+</header>
+<div class="container">
+
+    <th:block th:each="member : ${members}">
+
+        <!-- Back button as an anchor -->
+        <p><a th:href="@{/coach/coach_dashboard}" class="btn-view">Back</a></p>
+
+        <div class="profile-card">
+            <div class="left-section">
+                <div class="avatar">
+                    <img th:src="@{/images/man.png}" alt="Avatar">
+                </div>
+                <h2 th:text="${member.userName}"></h2>
+                <p><strong>Username :  </strong><span th:text="${member.fullName}"></span></p>
+                <p><strong>Contact Number :  </strong><span th:text="${member.contactNumber}"></span></p>
+                <p><strong>Member ID :  </strong><span th:text="${member.memberId}"></span></p>
+                <p><strong>Emergency Contact :  </strong><span th:text="${member.emergencyContact}"></span></p>
+                <p><strong>Address :  </strong><span th:text="${member.address}"></span></p>
+                <p><strong>Gender :  </strong><span th:text="${member.gender}"></span></p>
+                <div class="medical-condition-box">
+                    <p><strong>Medical Conditions</strong></p>
+                    <textarea readonly th:text="${member.medicalConditions}"></textarea>
+                </div>
+            </div>
+
+
+            <div class="right-section">
+
+                <div class="topic-scheduling">
+                    <p>SCHEDULING DETAILS</p>
+                </div>
+
+                <div class="details-card">
+                    <p><strong>Booking ID :</strong> <span th:text="${member.id}"></span></p>
+                    <p><strong>Scheduled Date :</strong> <span th:text="${member.scheduleDate}"></span></p>
+                    <p><strong>Reservation Number :</strong> <span th:text="${member.reservationNumber}"></span></p>
+                    <p><strong id="reservationTime">Time :</strong>
+                        <span th:if="${member.reservationNumber} >= 1 and ${member.reservationNumber} <= 10">
+                            10:00 AM - 1:00 PM
+                        </span>
+                        <span th:if="${member.reservationNumber} >= 11 and ${member.reservationNumber} <= 20">
+                            1:00 PM - 5:00 PM
+                        </span>
+                        <span th:if="${member.reservationNumber} >= 21 and ${member.reservationNumber} <= 30">
+                            5:00 PM - 8:00 PM
+                        </span>
+                    </p>
+                </div>
+
+
+
+                <button type="button" class="btn-s "
+
+                >
+                    Check Daily Workouts
+                </button>
+
+
+                <a class="btn-a" th:href="@{/workouts/NextWorkouts(username=${member.userName}, id=${member.id})}">Add Next Workouts</a>
+
+
+
+
+
+
+            </div>
+        </div>
+    </th:block>
+
+</div>
+
+
+
+
+
+</body>
+</html>
