@@ -21,6 +21,10 @@
             <p><strong>Member Name :</strong> <span th:text="${member.userName}"></span></p>
             <p><strong>Scheduled Date :</strong> <span th:text="${member.scheduleDate}"></span></p>
             <p><strong>Booking ID :</strong> <span th:text="${member.id}"></span></p>
+
+            <!-- Hidden input for booking ID -->
+            <input type="hidden" id="booking-id" th:value="${member.id}" />
+
         </div>
     </div>
 
@@ -37,15 +41,17 @@
                         <th>Reps</th>
                         <th>Sets</th>
                         <th>Description</th>
-                        <th>Action </th>
+                        <th> </th>
                     </tr>
                     </thead>
                     <tbody>
                     <!-- Workouts will be added here dynamically -->
                     </tbody>
                 </table>
-                <!-- Button to submit workouts -->
-                <button type="submit" class="assign-workouts-button">Assign Workouts</button>
+                    <!-- Button to submit workouts -->
+                    <button type="button" class="assign-workouts-button" onclick="submitWorkouts(event)">
+                        Assign Workouts
+                    </button>
         </div>
 
 
@@ -457,10 +463,10 @@ function addExercise(exerciseName, exerciseVideoLink) {
     });
 
     // Get the booking ID from the span that contains it
-    const bookingId = document.querySelector('.details-row span[th\\:text="${member.id}"]').textContent.trim();
+    const bookingId = document.getElementById('booking-id').value;
 
     // Send the workouts data to the backend via POST request
-    fetch(`/api/workouts/assign?bookingId=${bookingId}`, {
+    fetch(`/workouts/assign?bookingId=${bookingId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -471,20 +477,16 @@ function addExercise(exerciseName, exerciseVideoLink) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
+        return response.text(); // Parse response as plain text
     })
     .then(data => {
-        alert('Workouts assigned successfully');
-        // Optionally, you can refresh the assigned workouts display or clear the form
+        alert(data); // Display success message from the server
     })
     .catch(error => {
         console.error('Error assigning workouts:', error);
         alert('Error assigning workouts: ' + error.message);
     });
 }
-
-
-
 
 </script>
 

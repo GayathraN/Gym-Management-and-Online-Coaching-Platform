@@ -245,22 +245,6 @@ public class ReservationService {
     }
 
 
-
-    public void assignWorkoutsToReservation(Long bookingId, List<AssignedWorkout> workouts) {
-        Reservation reservation = reservationRepository.findById(bookingId)
-                .orElseThrow(() -> new RuntimeException("Reservation not found"));
-        for (AssignedWorkout workout : workouts) {
-            workout.setReservation(reservation); // Set the reservation reference
-            reservation.addAssignedWorkout(workout);
-        }
-        reservationRepository.save(reservation); // Save the updated reservation
-    }
-
-
-
-
-
-
     // ReservationDetails class
     public static class ReservationDetails {
         private Long id;

@@ -5,13 +5,23 @@ import com.project4x.project4x.repository.AssignedWorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AssignedWorkoutService {
 
     @Autowired
     private AssignedWorkoutRepository assignedWorkoutRepository;
 
-    public AssignedWorkout saveWorkout(AssignedWorkout workout) {
-        return assignedWorkoutRepository.save(workout);
+    public AssignedWorkoutService(AssignedWorkoutRepository assignedWorkoutRepository) {
+        this.assignedWorkoutRepository = assignedWorkoutRepository;
+    }
+
+    public List<AssignedWorkout> saveAll(List<AssignedWorkout> workouts) {
+        return assignedWorkoutRepository.saveAll(workouts);
+    }
+
+    public List<AssignedWorkout> getWorkoutsByBookingId(Long bookingId) {
+        return assignedWorkoutRepository.findByBookingId(bookingId);
     }
 }

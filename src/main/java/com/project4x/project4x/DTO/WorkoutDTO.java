@@ -1,31 +1,15 @@
-package com.project4x.project4x.entity;
+package com.project4x.project4x.DTO;
 
-import jakarta.persistence.*;
+import lombok.Data;
 
-@Entity
-public class AssignedWorkout {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+@Data
+public class WorkoutDTO {
     private String workoutName;
     private int reps;
     private int sets;
-    @Lob
     private String description;
     private String videoLink;
     private Long bookingId;
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getWorkoutName() {
         return workoutName;

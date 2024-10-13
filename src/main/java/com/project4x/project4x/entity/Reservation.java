@@ -31,21 +31,6 @@ public class Reservation {
     }
 
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AssignedWorkout> assignedWorkouts = new ArrayList<>();
-
-    // Add methods to add or remove workouts
-    public void addAssignedWorkout(AssignedWorkout workout) {
-        assignedWorkouts.add(workout);
-        workout.setReservation(this);
-    }
-
-    public void removeAssignedWorkout(AssignedWorkout workout) {
-        assignedWorkouts.remove(workout);
-        workout.setReservation(null);
-    }
-
-
 
     //Getters and setters
 

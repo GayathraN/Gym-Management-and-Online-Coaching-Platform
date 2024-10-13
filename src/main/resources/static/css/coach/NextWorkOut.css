@@ -54,77 +54,72 @@ header {
             min-height: 100vh; /* Ensure full height */
         }
 
+        /* Ensure the details card contains both columns */
         .details-card {
             width: 93%;
             background-color: #ffffff; /* White background for contrast */
-            border-radius: 15px; /* More rounded corners */
+            border-radius: 15px; /* Rounded corners */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
-            padding: 30px; /* More padding for spaciousness */
-            margin: 20px auto; /* Center it with auto margins */
-            text-align: center; /* Center text within the card */
+            padding: 30px;
+            margin: 20px auto;
+            text-align: left; /* Align text to the left */
         }
 
-
-        /* Split container for left and right side sections */
+        /* Split container for left and right side sections inside details card */
         .split-container {
             display: flex;
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
-            justify-content: space-between; /* Space between left and right sections */
-            align-items: stretch; /* Align both columns to stretch full height */
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 20px;
         }
 
-
-        /* Left and Right columns */
-        .left-column, .right-column {
-            width: 50%; /* Each column takes up half of the screen */
-            padding: 20px; /* Padding for content */
-            box-sizing: border-box; /* Include padding and borders in element's width */
-            overflow-y: auto; /* Enable scrolling if content exceeds height */
-        }
-
+        /* Left column inside details card */
         .left-column {
-            background-color: #f9f9f9; /* Light background for left side */
+            width: 48%; /* Adjusted to fit inside the details card */
+            padding: 20px;
+            background-color: #f9f9f9; /* Light background */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            overflow-y: auto;
         }
 
+        /* Right column inside details card */
         .right-column {
-            background-color: #fff; /* White background for right side */
-            border-left: 1px solid #ddd; /* Subtle border between the two columns */
+            width: 48%; /* Adjusted to fit inside the details card */
+            padding: 20px;
+            background-color: #ffffff; /* White background for contrast */
+            border: 1px solid #ddd; /* Subtle border for definition */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            overflow-y: auto;
         }
 
-        /* Adjust workout categories and exercise list */
+        /* Adjust workout categories and exercise list in the right column */
         .workout-card ul {
             list-style: none;
             padding: 0;
             display: flex;
-            justify-content: space-around; /* Space the workout categories evenly */
+            justify-content: space-around; /* Space categories evenly */
         }
 
         .workout-card li {
-            flex: 1; /* Each category takes equal space */
+            flex: 1;
             padding: 15px;
             background-color: #e0e0e0;
             margin-bottom: 10px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
-            margin-right: 10px;
-            border: 2px solid transparent;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .workout-card li:hover {
             background-color: #d3d3d3;
-            transform: translateY(-3px); /* Lift effect on hover */
-        }
-
-        .workout-card li.active {
-            border-color: #b0b0b0;
-            background-color: #b0b0b0;
+            transform: translateY(-3px);
         }
 
         .workout-details {
-            display: none; /* Hidden until category is clicked */
+            display: none; /* Hidden until clicked */
             margin-top: 20px;
             background-color: #ffffff;
             padding: 20px;
@@ -136,12 +131,12 @@ header {
 
         .exercise-list {
             display: flex;
-            flex-wrap: wrap; /* Wrap exercises within the list */
+            flex-wrap: wrap;
             gap: 15px;
         }
 
         .exercise-item {
-            flex: 1 1 calc(25% - 10px); /* Each exercise item takes 25% of the width */
+            flex: 1 1 calc(25% - 10px);
             padding: 15px;
             background-color: #e0e0e0;
             border-radius: 10px;
@@ -152,8 +147,9 @@ header {
 
         .exercise-item:hover {
             background-color: #ccc;
-            transform: translateY(-3px); /* Lift effect */
+            transform: translateY(-3px);
         }
+
 
         video {
             max-width: 100%; /* Ensure video is responsive */
@@ -256,6 +252,7 @@ table tbody tr:last-child td {
 
 .btn-s:hover {
   background: linear-gradient(135deg, #686060 20%, #020202 100%);
+  transform: translateY(-3px);
 }
 
 .btn-a {
@@ -280,6 +277,7 @@ table tbody tr:last-child td {
 
 .btn-a:hover {
   background-color: #68de83;
+   transform: translateY(-3px);
 }
 
 .cancel-button {
@@ -293,4 +291,28 @@ table tbody tr:last-child td {
 
 .cancel-button:hover {
     background-color: #ff1a1a; /* Darker red on hover */
+    transform: translateY(-3px);
+}
+
+.assign-workouts-button {
+    display: flex;
+      width: 40%;
+      height: 18px;
+      margin: 0 auto; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      justify-content: center; /* Center horizontally */
+      padding: 12px;
+      background-color: #28a745;
+      color: #fff;
+      font-size: 1rem; /* Increased text size */
+      font-weight: bold;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-decoration: none; /* Removes underline */
+}
+.assign-workouts-button:hover {
+   transform: translateY(-3px);
 }
