@@ -1,6 +1,10 @@
 package com.project4x.project4x.controller;
 
+import com.project4x.project4x.entity.AssignedWorkout;
 import com.project4x.project4x.entity.Member;
+import com.project4x.project4x.entity.Reservation;
+import com.project4x.project4x.repository.AssignedWorkoutRepository;
+import com.project4x.project4x.repository.ReservationRepository;
 import com.project4x.project4x.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/member")
 @SessionAttributes("member")  // Store 'member' in the session
@@ -19,6 +27,10 @@ public class MemberController {
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private ReservationRepository reservationRepository;
+    @Autowired
+    private AssignedWorkoutRepository assignedWorkoutRepository;
 
     // Step 1: Show registration step 1 page
     @GetMapping("/register/step1")
@@ -71,9 +83,39 @@ public class MemberController {
 
     // Show dashboard home page
     @GetMapping("/dashboard")
-    public String showDashboard() {
-        return "Member/dashboard_member";
+    public String showDashboard(HttpSession session, Model model) {
+        String userName = (String) session.getAttribute("userName"); // Retrieve username from session
+        if (userName != null) {
+            LocalDate today = LocalDate.now(); // Get the current date
+
+            // Fetch the latest reservation with a schedule date >= today
+            Optional<Reservation> latestReservation = reservationRepository
+                    .findTopByUserNameAndScheduleDateGreaterThanEqualOrderByScheduleDateAsc(userName, today);
+
+            if (latestReservation.isPresent()) {
+                Reservation reservation = latestReservation.get();
+                model.addAttribute("reservation", reservation); // Add reservation to model
+
+                // Fetch assigned workouts using the reservation ID
+                List<AssignedWorkout> workouts = assignedWorkoutRepository
+                        .findByBookingId(reservation.getId());
+
+                if (!workouts.isEmpty()) {
+                    model.addAttribute("workouts", workouts); // Add workout list to model
+                } else {
+                    model.addAttribute("message", "No assigned workouts found for this reservation.");
+                }
+            } else {
+                model.addAttribute("message", "No upcoming reservations found.");
+            }
+            return "Member/dashboard_member"; // Render dashboard template
+        } else {
+            model.addAttribute("error", "Session expired. Please log in again.");
+            return "Member/loginMember"; // Redirect to login if session expired
+        }
     }
+
+
 
 
     // Show dashboard dashboard_reservation page

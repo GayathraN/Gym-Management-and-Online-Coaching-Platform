@@ -28,6 +28,9 @@
         </div>
     </div>
 
+    <div id="successMessage" class="alert alert-success" role="alert" style="display: none;"></div>
+    <div id="errorMessage" class="alert alert-danger" role="alert" style="display: none;"></div>
+
     <!-- Split container for left and right side sections -->
     <div class="split-container">
 
@@ -443,10 +446,9 @@ function addExercise(exerciseName, exerciseVideoLink) {
 
 
 
-   function submitWorkouts(event) {
+  function submitWorkouts(event) {
     event.preventDefault();
 
-    // Get all workout rows from the table
     const tableBody = document.querySelector('.left-column table tbody');
     const rows = tableBody.querySelectorAll('tr');
     const workouts = [];
@@ -454,18 +456,16 @@ function addExercise(exerciseName, exerciseVideoLink) {
     rows.forEach(row => {
         const workout = {
             workoutName: row.cells[0].textContent,
-            reps: parseInt(row.cells[1].textContent) || 0, // Parse reps
-            sets: parseInt(row.cells[2].textContent) || 0, // Parse sets
+            reps: parseInt(row.cells[1].textContent) || 0,
+            sets: parseInt(row.cells[2].textContent) || 0,
             description: row.cells[3].textContent,
             videoLink: row.querySelector('input[type="hidden"]').value
         };
         workouts.push(workout);
     });
 
-    // Get the booking ID from the span that contains it
     const bookingId = document.getElementById('booking-id').value;
 
-    // Send the workouts data to the backend via POST request
     fetch(`/workouts/assign?bookingId=${bookingId}`, {
         method: 'POST',
         headers: {
@@ -475,18 +475,48 @@ function addExercise(exerciseName, exerciseVideoLink) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Failed to assign workouts');
         }
-        return response.text(); // Parse response as plain text
+        return response.json(); // Expect JSON response from server
     })
     .then(data => {
-        alert(data); // Display success message from the server
+        displayMessage('success', data.message || 'Workouts assigned successfully');
     })
     .catch(error => {
         console.error('Error assigning workouts:', error);
-        alert('Error assigning workouts: ' + error.message);
+        displayMessage('error', error.message || 'An error occurred while assigning workouts');
     });
 }
+
+function displayMessage(type, message) {
+    const successMessageDiv = document.getElementById('successMessage');
+    const errorMessageDiv = document.getElementById('errorMessage');
+
+    if (type === 'success') {
+        successMessageDiv.textContent = message;
+        successMessageDiv.classList.add('show');
+        successMessageDiv.style.display = 'block';
+        errorMessageDiv.style.display = 'none';
+    } else if (type === 'error') {
+        errorMessageDiv.textContent = message;
+        errorMessageDiv.classList.add('show');
+        errorMessageDiv.style.display = 'block';
+        successMessageDiv.style.display = 'none';
+    }
+
+    setTimeout(() => {
+        successMessageDiv.classList.add('hide');
+        errorMessageDiv.classList.add('hide');
+
+        setTimeout(() => {
+            successMessageDiv.style.display = 'none';
+            errorMessageDiv.style.display = 'none';
+            successMessageDiv.classList.remove('show', 'hide');
+            errorMessageDiv.classList.remove('show', 'hide');
+        }, 500); // Matches the fade-out duration
+    }, 5500);
+}
+
 
 </script>
 

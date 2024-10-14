@@ -24,23 +24,27 @@ header {
 
 .details-row {
     display: flex;
-    justify-content: space-between;
-    margin: 8px 0;
-    align-items: center;
+    justify-content: center; /* Center the items */
+    margin: 0 auto; /* Center the row itself */
+    align-items: center; /* Vertically center content */
+    flex-wrap: wrap; /* Allow wrapping if there is not enough space */
+    margin-left:120px;
 }
 
 .details-card p {
     font-size: 16px;
     color: #333;
-    margin: 0;
+    margin:5px 10px; /* Add margin for spacing around each paragraph */
     padding: 5px;
-    flex: 1;
+    flex: 1; /* Make each p element take equal space */
+    display: flex; /* Make p a flex container to center content */
+    align-items: center; /* Vertically center content within p */
 }
 
 .details-card p strong {
     font-weight: 600;
     color: #555;
-    margin-right: 10px;
+    margin-right: 10px; /* Space between strong and span */
 }
 
 
@@ -315,4 +319,33 @@ table tbody tr:last-child td {
 }
 .assign-workouts-button:hover {
    transform: translateY(-3px);
+}
+
+
+
+.alert {
+    padding: 15px 20px;
+    background-color: rgba(244, 67, 54, 0.8); /* Red with subtle transparency */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    font-family: Arial, sans-serif; /* Modern font */
+}
+
+.alert-success {
+    padding: 15px 20px;
+    background-color: rgba(11, 176, 44, 0.8); /* Green with subtle transparency */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    font-family: Arial, sans-serif; /* Modern font */
+}
+
+.alert-danger {
+    padding: 15px 20px;
+    background-color: rgba(244, 67, 54, 0.8); /* Red with subtle transparency */
+    color: white;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    font-family: Arial, sans-serif; /* Modern font */
 }

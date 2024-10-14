@@ -21,7 +21,5 @@ public class AssignedWorkoutService {
         return assignedWorkoutRepository.saveAll(workouts);
     }
 
-    public List<AssignedWorkout> getWorkoutsByBookingId(Long bookingId) {
-        return assignedWorkoutRepository.findByBookingId(bookingId);
-    }
+
 }

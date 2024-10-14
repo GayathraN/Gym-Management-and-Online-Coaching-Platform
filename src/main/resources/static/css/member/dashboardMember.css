@@ -353,3 +353,136 @@ h1 {
             margin: 20px auto; /* Center it with auto margins */
             text-align: center; /* Center text within the card */
 }
+
+
+
+//* Container Styling */
+ .details-card-3 {
+     background-color: #f5f5f5;
+     border-radius: 12px;
+     padding: 20px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+     max-width: 800px;
+     margin: 20px auto;
+ }
+
+/* Workout List Scroll */
+.workout-list {
+    max-height: 600px; /* Set a max height for the scroll */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    list-style: none;
+}
+
+/* Scrollbar Customization */
+.workout-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.workout-list::-webkit-scrollbar-track {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+}
+
+.workout-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.workout-list::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+/* Workout Item Styling */
+.workout-item {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+ /* Individual Workout Item */
+ .workout-item {
+     background-color: #e6e6e6;
+     border-radius: 8px;
+     margin-bottom: 15px;
+     padding: 15px;
+     display: flex;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     transition: transform 0.2s;
+ }
+
+ .workout-item:hover {
+     transform: scale(1.02);
+ }
+
+ /* Workout Content */
+ .workout-content {
+     display: flex;
+     justify-content: space-between;
+     width: 100%;
+ }
+
+/* Workout Info Section */
+.workout-info {
+    width: 65%;
+    background-color: #f9f9f9; /* Light background for better contrast */
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Workout Name */
+.workout-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* Styling Reps, Sets, and Description */
+.workout-info strong {
+    display: inline-block;
+    width: 80px; /* Align text evenly */
+    font-size: 16px;
+    font-weight: 600;
+    color: #555;
+}
+
+.workout-info span {
+    font-size: 16px;
+    color: #444;
+}
+
+/* Add spacing between fields */
+.workout-info br {
+    margin-bottom: 10px;
+}
+
+/* Hover effect */
+.workout-info:hover {
+    background-color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+    transition: all 0.3s ease;
+}
+
+ .workout-video {
+     width: 40%; /* Adjust as needed */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .exercise-video {
+     width: 100%;
+     height: 150px;
+     border-radius: 8px;
+     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+     border: none;
+ }
+
