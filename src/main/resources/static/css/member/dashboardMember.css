@@ -18,6 +18,7 @@ header {
     box-shadow: 0 4px 8px rgba(0, 0, 0,0.5);
     position: sticky; /* Makes the header sticky */
     top: 0; /* Sticks the header at the top */
+     z-index: 999;
     background-image: url('/images/img12.jpg');
 }
 
@@ -466,6 +467,7 @@ h1 {
 
 /* Hover effect */
 .workout-info:hover {
+    z-index: 10;
     background-color: #fff;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
     transition: all 0.3s ease;
