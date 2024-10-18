@@ -29,7 +29,7 @@ public class NotificationController {
         // Add the reservation details to the model to pass to the Thymeleaf template
         model.addAttribute("reservation", reservationDetails);
 
-        return "Pdf"; // Return the Pdf.html Thymeleaf template
+        return "Member/Pdf"; // Return the Pdf.html Thymeleaf template
     }
 
 }
