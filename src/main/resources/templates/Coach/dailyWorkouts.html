@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/coach/dashboardCoach.css}">
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1>Gym Management and Online Coaching Platform</h1>
+    </div>
+</header>
+
+<main class="content">
+    <div class="workout-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Schedule Name</th>
+                <th>Reservation Number</th>
+                <th>Workout Name</th>
+                <th>Description</th>
+                <th>Reps</th>
+                <th>Sets</th>
+                <th>Video Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="workout : ${workouts}">
+                <td th:text="${workout.id}">Booking ID</td>
+                <td th:text="${workout.scheduleDate}">Schedule Date</td>
+                <td th:text="${workout.reservationNumber}">Reservation Number</td>
+                <td th:text="${workout.workoutName}">Workout Name</td>
+                <td th:text="${workout.description}">Description</td>
+                <td th:text="${workout.reps}">Reps</td>
+                <td th:text="${workout.sets}">Sets</td>
+                <td>
+                    <a th:href="${workout.videoLink}" target="_blank">View Video</a>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+</body>
+</html>

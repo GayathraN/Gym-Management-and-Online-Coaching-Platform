@@ -1,9 +1,9 @@
 package com.project4x.project4x.service;
 
-import com.project4x.project4x.entity.AssignedWorkout;
 import com.project4x.project4x.entity.Coach;
 import com.project4x.project4x.entity.Member;
 import com.project4x.project4x.entity.Reservation;
+import com.project4x.project4x.repository.AssignedWorkoutRepository;
 import com.project4x.project4x.repository.CoachRepository;
 import com.project4x.project4x.repository.MemberRepository;
 import com.project4x.project4x.repository.ReservationRepository;
@@ -23,12 +23,14 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository reservationRepository;
-
     @Autowired
     private MemberRepository memberRepository;
-
     @Autowired
     private CoachRepository coachRepository;
+    @Autowired
+    private AssignedWorkoutRepository assignedWorkoutRepository;
+
+
 
     // Check if a reservation is available on a specific date and reservation number
     public boolean isReservationAvailable(LocalDate date, int reservationNumber) {
@@ -244,9 +246,19 @@ public class ReservationService {
         return reservationRepository.findByAssignedCoachUserName(coachUserName);
     }
 
+    public Optional<Reservation> findByReservationNumberAndScheduleDate(Integer reservationNumber, LocalDate scheduleDate) {
+        return reservationRepository.findByReservationNumberAndScheduleDate(reservationNumber, scheduleDate);
+    }
+
+
 
     // ReservationDetails class
     public static class ReservationDetails {
+        private String description;
+        private int reps;
+        private int sets;
+        private String videoLink;
+        private String workoutName;
         private Long id;
         private int reservationNumber;
         private LocalDate scheduleDate;
@@ -296,8 +308,63 @@ public class ReservationService {
             this.contactNumber = contactNumber;
         }
 
+        public ReservationDetails(Long id, int reservationNumber, LocalDate scheduleDate, String workoutName, int reps, int sets, String description, String videoLink) {
+            this.reservationNumber = reservationNumber;
+            this.scheduleDate = scheduleDate;
+            this.id = id;
+            this.workoutName = workoutName;
+            this.reps = reps;
+            this.sets = sets;
+            this.description = description;
+            this.videoLink = videoLink;
+        }
+
         // Getters and setters
 
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public int getReps() {
+            return reps;
+        }
+
+        public void setReps(int reps) {
+            this.reps = reps;
+        }
+
+        public int getSets() {
+            return sets;
+        }
+
+        public void setSets(int sets) {
+            this.sets = sets;
+        }
+
+        public String getVideoLink() {
+            return videoLink;
+        }
+
+        public void setVideoLink(String videoLink) {
+            this.videoLink = videoLink;
+        }
+
+        public String getWorkoutName() {
+            return workoutName;
+        }
+
+        public void setWorkoutName(String workoutName) {
+            this.workoutName = workoutName;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
 
         public Long getId() {
             return id;

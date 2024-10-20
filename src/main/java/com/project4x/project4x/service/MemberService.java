@@ -1,6 +1,7 @@
 package com.project4x.project4x.service;
 
 import com.project4x.project4x.entity.Member;
+import com.project4x.project4x.entity.Reservation;
 import com.project4x.project4x.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,15 @@ public class MemberService {
             throw new IllegalArgumentException("Passwords do not match");
         }
 
-        // Optionally, hash the password before saving
-        // member.setPassword(hashPassword(member.getPassword()));
-
         return memberRepository.save(member);
     }
 
     public Optional<Member> findByUserNameAndPassword(String userName, String password) {
         return memberRepository.findByUserName(userName)
                 .filter(member -> member.getPassword().equals(password));
+    }
+
+    public Optional<Member> findByUserName(String userName) {
+        return memberRepository.findByUserName(userName);
     }
 }

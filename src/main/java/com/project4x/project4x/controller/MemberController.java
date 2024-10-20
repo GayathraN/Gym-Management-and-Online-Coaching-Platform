@@ -76,7 +76,7 @@ public class MemberController {
             session.setAttribute("userName", userName); // Store username in session
             return "redirect:/member/dashboard";
         } else {
-            model.addAttribute("error", "Invalid credentials");
+            model.addAttribute("error", "Invalid Username or Password");
             return "Member/loginMember";
         }
     }

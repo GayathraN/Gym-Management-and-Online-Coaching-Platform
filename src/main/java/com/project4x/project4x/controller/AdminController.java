@@ -66,6 +66,8 @@ public class AdminController {
             return "redirect:/admin/admin_dashboard";
         } else {
             model.addAttribute("error", "Invalid Username or Password");
+            model.addAttribute("admin", new Coach());
+
             return "Admin/loginAdmin";
         }
     }

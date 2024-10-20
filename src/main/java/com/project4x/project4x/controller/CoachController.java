@@ -68,6 +68,8 @@ public class CoachController {
             return "redirect:/coach/coach_dashboard";
         } else {
             model.addAttribute("error", "Invalid Username or Password");
+            model.addAttribute("coach", new Coach());
+
             return "Coach/loginCoach";
         }
     }
@@ -106,13 +108,7 @@ public class CoachController {
         List<ReservationService.ReservationDetails> members = reservationService.getMemberDetailsByUserNameAndId(userName, id);
         model.addAttribute("members", members);
 
-
         return "Coach/member_history";
     }
-
-
-
-
-
 
 }

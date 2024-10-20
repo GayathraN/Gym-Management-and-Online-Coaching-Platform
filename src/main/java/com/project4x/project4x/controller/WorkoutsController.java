@@ -59,4 +59,17 @@ public class WorkoutsController {
         return ResponseEntity.ok(response);
     }
 
+
+    // Get daily workouts of member
+    @GetMapping("/daily_workouts")
+    public String workoutsDetails(@RequestParam("username") String username, Model model) {
+       // List<ReservationService.ReservationDetails> workouts = reservationService.getWorkoutsDetailsByUserName(username);
+      //  model.addAttribute("workouts", workouts);
+
+        return "Coach/dailyWorkouts";
+    }
+
+
+
+
 }

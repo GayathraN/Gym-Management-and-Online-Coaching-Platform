@@ -7,17 +7,19 @@ body {
 }
 
 header {
-  background: linear-gradient(135deg, #00B4EB 1%, #044E8F 40%, #50B748 100%);
-  padding: 20px;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 50px; /* Adjusted header height */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  position: sticky; /* Makes the header sticky */
-  top: 0; /* Sticks the header at the top */
+    background: linear-gradient(to top, rgba(217, 217, 217, 0.60) 41%, rgba(115, 115, 115, 0.60) 100%);
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 60px; /* Adjusted header height */
+    box-shadow: 0 4px 8px rgba(0, 0, 0,0.5);
+    position: sticky; /* Makes the header sticky */
+    top: 0; /* Sticks the header at the top */
+     z-index: 999;
+    background-image: url('/images/img12.jpg');
 }
 
 .header-content {
@@ -112,7 +114,7 @@ h1 {
 
 .download-btn,
 .home-btn {
-    background: linear-gradient(135deg, #044E8F 0%, #50B748 100%);
+    background: linear-gradient(135deg, #020202 0%, #686060 100%);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -130,9 +132,9 @@ h1 {
 }
 
 .home-btn {
-    background: linear-gradient(135deg, #044E8F 0%, #50B748 100%);
+    background: linear-gradient(135deg, #020202 0%, #686060 100%);
 }
 
 .home-btn:hover {
-    background: linear-gradient(135deg, #046A98 0%, #50B748 100%);
+    background: linear-gradient(135deg, #686060 0%, #020202 100%);
 }

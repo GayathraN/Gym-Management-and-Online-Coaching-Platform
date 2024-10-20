@@ -31,7 +31,6 @@ public class Reservation {
     }
 
 
-
     //Getters and setters
 
     public Long getId() {

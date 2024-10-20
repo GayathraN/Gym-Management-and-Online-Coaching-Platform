@@ -29,4 +29,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findByAssignedCoach(Coach coach);
 
     Optional<Reservation> findTopByUserNameAndScheduleDateGreaterThanEqualOrderByScheduleDateAsc(String userName, LocalDate today);
+
+    Optional<Reservation> findByReservationNumberAndScheduleDate(Integer reservationNumber, LocalDate scheduleDate);
 }

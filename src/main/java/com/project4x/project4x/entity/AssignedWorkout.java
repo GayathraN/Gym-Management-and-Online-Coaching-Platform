@@ -17,6 +17,7 @@ public class AssignedWorkout {
     private String videoLink;
     private Long bookingId;
 
+
     // Getters and Setters
 
     public Long getId() {
@@ -74,4 +75,6 @@ public class AssignedWorkout {
     public void setBookingId(Long bookingId) {
         this.bookingId = bookingId;
     }
+
+
 }
