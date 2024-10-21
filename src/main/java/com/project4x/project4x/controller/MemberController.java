@@ -7,7 +7,6 @@ import com.project4x.project4x.repository.AssignedWorkoutRepository;
 import com.project4x.project4x.repository.ReservationRepository;
 import com.project4x.project4x.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -111,7 +110,7 @@ public class MemberController {
             return "Member/dashboard_member"; // Render dashboard template
         } else {
             model.addAttribute("error", "Session expired. Please log in again.");
-            return "Member/loginMember"; // Redirect to login if session expired
+            return "Member/loginMember";
         }
     }
 
