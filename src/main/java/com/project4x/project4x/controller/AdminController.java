@@ -4,6 +4,7 @@ import com.project4x.project4x.entity.Admin;
 import com.project4x.project4x.entity.Coach;
 import com.project4x.project4x.repository.AdminRepository;
 import com.project4x.project4x.repository.CoachRepository;
+import com.project4x.project4x.service.AttendanceService;
 import com.project4x.project4x.service.MemberService;
 import com.project4x.project4x.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,6 +34,8 @@ public class AdminController {
 
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private AttendanceService attendanceService;
 
     // Show registration page
     @GetMapping("/register")
@@ -84,6 +89,10 @@ public class AdminController {
         } else {
             bookings = reservationService.getAllBookedSeats();
         }
+
+        // Sort bookings by booking id in descending order
+        bookings.sort(Comparator.comparing(ReservationService.ReservationDetails::getId).reversed());
+
         model.addAttribute("bookings", bookings);
         model.addAttribute("scheduleDate", scheduleDate);
         return "Admin/dashboard_admin";
@@ -173,6 +182,69 @@ public class AdminController {
 
         return "redirect:/admin/admin_dashboard";
     }
+
+
+
+    // Get details of bookings
+    @GetMapping("/attendance")
+    public String membersAttendance(@RequestParam(value = "scheduleDate", required = false)
+                                        @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate scheduleDate,
+                                    Model model) {
+        List<AttendanceService.AttendanceDetails> bookings;
+        if (scheduleDate != null) {
+            bookings = attendanceService.getFilterByDate(scheduleDate);  // Fix: called on the instance
+        } else {
+            bookings = attendanceService.getAllBookedSeats();
+        }
+
+        // Sort bookings by booking id in descending order
+        bookings.sort(Comparator.comparing(AttendanceService.AttendanceDetails::getId).reversed());
+
+        model.addAttribute("bookings", bookings);
+        model.addAttribute("scheduleDate", scheduleDate);
+
+
+        return "Admin/attendance";
+    }
+
+    // Filter by user name
+    @PostMapping("/attendance/search")
+    public String searchByUserNameAttendancePage(@RequestParam("userName") String userName, Model model) {
+        List<AttendanceService.AttendanceDetails> bookings;
+        if (userName.isEmpty()) {
+            bookings = attendanceService.getAllBookedSeats();
+        } else {
+            bookings = attendanceService.getBookingsByUserName(userName);
+        }
+
+        // Sort bookings by booking id in descending order
+        bookings.sort(Comparator.comparing(AttendanceService.AttendanceDetails::getId).reversed());
+
+
+        model.addAttribute("bookings", bookings);
+        return "Admin/attendance";
+    }
+
+
+    @PostMapping("/markAttendance")
+    public String markAttendance(@RequestParam Map<String, String> allParams) {
+        for (Map.Entry<String, String> entry : allParams.entrySet()) {
+            if (entry.getKey().startsWith("attendance_")) {
+                // Extract booking ID from parameter name (e.g., "attendance_1" -> booking ID is 1)
+                Long bookingId = Long.parseLong(entry.getKey().split("_")[1]);
+
+                // Check if the checkbox was checked
+                boolean attendance = entry.getValue() != null && entry.getValue().equals("on");
+
+                // Update the attendance in the database
+                attendanceService.updateAttendance(bookingId, attendance);
+            }
+        }
+
+        return "redirect:/admin/attendance";
+    }
+
+
 
 
 }

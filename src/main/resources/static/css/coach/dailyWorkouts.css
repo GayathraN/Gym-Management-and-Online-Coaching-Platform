@@ -56,11 +56,12 @@ header {
     display: flex;
     flex-direction: column;
     transition: transform 0.2s, box-shadow 0.2s;
+    margin: 15px 5px 15px 5px; /* top, right, bottom, left */
 }
 
 .workout-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgb(0, 0, 15);
 }
 
 .card-header {

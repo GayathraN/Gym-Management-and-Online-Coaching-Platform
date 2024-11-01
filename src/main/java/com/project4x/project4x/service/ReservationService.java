@@ -251,7 +251,6 @@ public class ReservationService {
     }
 
 
-
     // ReservationDetails class
     public static class ReservationDetails {
         private String description;

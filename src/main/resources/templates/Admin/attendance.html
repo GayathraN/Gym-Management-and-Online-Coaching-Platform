@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Attendance</title>
     <link rel="stylesheet" th:href="@{/css/admin/dashboardAdmin.css}">
 </head>
 <body>
@@ -43,7 +43,7 @@
 
         <div class="form-container">
             <div class="search">
-                <form action="/admin/admin_dashboard/search" method="post">
+                <form action="/admin/attendance/search" method="post">
                     <input class="search-input" type="search" id="userName" name="userName" placeholder="Search by User Name">
                     <button type="submit" class="btn-s">Search</button>
                 </form>
@@ -55,19 +55,25 @@
         <!---Table Section------>
         <div class="table-container">
             <div class="table-header">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Booking Id</th>
-                        <th>Booked Date</th>
-                        <th>Reservation Number</th>
-                        <th>Full Name</th>
-                        <th>User Name</th>
-                        <th>Contact Number</th>
-                        <th>Other Details</th>
-                    </tr>
-                    </thead>
-                </table>
+
+                <form th:action="@{/admin/markAttendance}" method="post">
+                    <div class="button_container">
+                        <button type="submit" class="attendance-btn">Mark Attendance</button>
+                    </div>
+
+
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Booking Id</th>
+                            <th>Booked Date</th>
+                            <th>Reservation Number</th>
+                            <th>User Name</th>
+                            <th>Attendance</th>
+                        </tr>
+                        </thead>
+                    </table>
             </div>
             <div class="table-body">
                 <div class="table-scroll">
@@ -78,15 +84,16 @@
                                 <td th:text="${booking.id}"></td>
                                 <td th:text="${booking.scheduleDate}"></td>
                                 <td th:text="${booking.reservationNumber}"></td>
-                                <td th:text="${booking.fullName}"></td>
                                 <td th:text="${booking.userName}"></td>
-                                <td th:text="${booking.contactNumber}"></td>
                                 <td>
-                                    <form action="/admin/member_details" method="post">
-                                        <input type="hidden" name="userName" th:value="${booking.userName}">
-                                        <input type="hidden" name="id" th:value="${booking.id}">
-                                        <button type="submit" class="btn-view">View</button>
-                                    </form>
+                                    <!-- Show checkbox only for today's bookings -->
+                                    <th:block th:if="${booking.scheduleDate.isEqual(T(java.time.LocalDate).now())}">
+                                        <input type="checkbox" th:checked="${booking.attendance}" th:name="'attendance_' + ${booking.id}" />
+                                    </th:block>
+                                    <!-- For past and future bookings, show 'N/A' -->
+                                    <th:block th:if="${!booking.scheduleDate.isEqual(T(java.time.LocalDate).now())}">
+                                        N/A
+                                    </th:block>
                                 </td>
 
                             </tr>
@@ -95,14 +102,17 @@
                     </table>
                 </div>
             </div>
+
+            </form>
         </div>
+
     </main>
 </div>
 
 <script>
     function filterByDate() {
         const date = document.getElementById('scheduleDate').value;
-        window.location.href = '/admin/admin_dashboard?scheduleDate=' + date;
+        window.location.href = '/admin/attendance?scheduleDate=' + date;
     }
 </script>
 

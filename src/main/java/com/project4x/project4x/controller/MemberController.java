@@ -9,6 +9,7 @@ import com.project4x.project4x.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -135,5 +136,16 @@ public class MemberController {
         return "redirect:/";
     }
 
+
+    //History page
+    @GetMapping("/history/page")
+    public String showBookingHistory(@RequestParam(value = "scheduleDate", required = false)
+                                     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate scheduleDate,
+                                     HttpSession session, Model model) {
+
+
+
+        return "Member/History";
+    }
 
 }

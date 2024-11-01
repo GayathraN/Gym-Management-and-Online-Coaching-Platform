@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" th:href="@{/css/member/dashboardMember.css}">
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1>Gym Management and Online Coaching Platform</h1>
+    </div>
+</header>
+
+<div class="container">
+    <nav class="sidebar">
+        <img th:src="@{/images/gymLogo.png}" alt="Gym Logo" class="logo">
+        <ul>
+            <li><a th:href="@{/member/dashboard}">HOME</a></li>
+            <li><a th:href="@{/member/dashboard_reservation}">RESERVATION</a></li>
+            <li><a th:href="@{/member/history/page}">HISTORY</a></li>
+            <li><a href="#">DAILY REPORTS</a></li>
+            <li><a href="#">PAYMENTS</a></li>
+            <li><a href="#">DETAILS</a></li>
+            <form action="/member/logout" method="post">
+                <button type="submit" class="btn logout-btn">Log out</button>
+            </form>
+        </ul>
+    </nav>
+
+    <main class="content">
+
+
+    </main>
+
+</body>
+</html>
