@@ -4,7 +4,9 @@ import com.project4x.project4x.entity.AssignedWorkout;
 import com.project4x.project4x.entity.Member;
 import com.project4x.project4x.entity.Reservation;
 import com.project4x.project4x.repository.AssignedWorkoutRepository;
+import com.project4x.project4x.repository.MemberRepository;
 import com.project4x.project4x.repository.ReservationRepository;
+import com.project4x.project4x.service.HistoryService;
 import com.project4x.project4x.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +33,10 @@ public class MemberController {
     private ReservationRepository reservationRepository;
     @Autowired
     private AssignedWorkoutRepository assignedWorkoutRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private HistoryService historyService;
 
     // Step 1: Show registration step 1 page
     @GetMapping("/register/step1")
@@ -143,9 +149,38 @@ public class MemberController {
                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate scheduleDate,
                                      HttpSession session, Model model) {
 
+        String userName = (String) session.getAttribute("userName");
 
+        if (userName != null) {
+            Member member = memberRepository.findByuserName(userName);
+            if (member != null) {
+                model.addAttribute("fullname", member.getFullName());
+                model.addAttribute("username", member.getUserName());
+            }
+        }
+
+        if (scheduleDate != null) {
+            // Filter by the selected date
+            List<HistoryService.HistoryDetails> pastBookings = historyService.getPastBookingsByDate(scheduleDate, userName);
+            List<HistoryService.HistoryDetails> futureBookings = historyService.getFutureBookingsByDate(scheduleDate, userName);
+            model.addAttribute("pastBookings", pastBookings);
+            model.addAttribute("futureBookings", futureBookings);
+        } else {
+            // Get all past and future bookings
+            List<HistoryService.HistoryDetails> pastBookings = historyService.getPastBookingsByUserName(userName);
+            List<HistoryService.HistoryDetails> futureBookings = historyService.getFutureBookingsByUserName(userName);
+            model.addAttribute("pastBookings", pastBookings);
+            model.addAttribute("futureBookings", futureBookings);
+        }
 
         return "Member/History";
     }
+
+    @PostMapping("/booking/cancel")
+    public String cancelBooking(@RequestParam("bookingId") Long bookingId) {
+        reservationRepository.deleteById(bookingId);
+        return "redirect:/member/history/page";
+    }
+
 
 }
