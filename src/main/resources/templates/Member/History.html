@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>History</title>
-    <link rel="stylesheet" th:href="@{/css/member/dashboardMember.css}">
+    <link rel="stylesheet" th:href="@{/css/member/history.css}">
 </head>
 <body>
 <header>
@@ -30,9 +30,76 @@
     </nav>
 
     <main class="content">
+        <p>Reservations Overview</p>
+        <p>Please enter a date to check your history :<p>
+
+        <!--- Search Date Section ----->
+        <div class="form-group">
+
+            <div class="date-section">
+                <input type="date" id="scheduleDate" class="date-picker"
+                       th:value="${scheduleDate}"
+                       onchange="filterByDate()">
+            </div>
+        </div>
+
+        <!-- Main Section with Future and Past Bookings -->
+        <div class="bookings-container">
+            <!-- Future Bookings Table -->
+            <div class="future-bookings">
+                <h2>Future Reservations</h2>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Reservation ID</th>
+                            <th>Reserved Date</th>
+                            <th>Reservation Number</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Past Bookings Table -->
+            <div class="past-bookings">
+                <h2>Past Reservations</h2>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Reservation ID</th>
+                            <th>Reserved Date</th>
+                            <th>Reservation Number</th>
+                            <th>Attendance</th>
+                        </tr>
+                        </thead>
+                        <div class="table-body-scroll">
+                            <tbody>
+
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 
     </main>
+
+
+    <script>
+        function filterByDate() {
+            const date = document.getElementById('scheduleDate').value;
+            window.location.href = '/history/page?scheduleDate=' + date;
+        }
+
+
+    </script>
 
 </body>
 </html>
