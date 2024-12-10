@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meal Plans</title>
+    <link rel="stylesheet" th:href="@{/css/meal/mealPlans.css}" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>Meal Plans For Member</h1>
+      </div>
+    </header>
+
+    <!-- Member details card -->
+    <div class="details-card">
+      <div class="details-card">
+        <div class="details-row">
+          <p>
+            <strong>Member Id :</strong> <span th:text="${memberId}"></span>
+          </p>
+
+          <input type="hidden" id="memberId" th:value="${memberId}" />
+        </div>
+      </div>
+
+      <div
+        id="successMessage"
+        class="alert alert-success"
+        role="alert"
+        style="display: none"
+      ></div>
+      <div
+        id="errorMessage"
+        class="alert alert-danger"
+        role="alert"
+        style="display: none"
+      ></div>
+
+      <!-- Split container for left and right side sections -->
+      <div class="split-container">
+        <!-- Left side: Assigned workouts table -->
+        <div class="left-column">
+          <h3>Assigned Meal Plans</h3>
+          <table id="table-assigned-meal-plans">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>Potion</th>
+                <th>Time</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Meal Plans will be added here dynamically -->
+            </tbody>
+          </table>
+          <!-- Button to submit workouts -->
+          <button
+            type="button"
+            class="assign-workouts-button"
+            onclick="submitMeals(event)"
+          >
+            Assign Meal Plans
+          </button>
+        </div>
+
+        <!-- Right side: meal categories and details -->
+        <div class="right-column">
+          <h3>Meal Categories</h3>
+          <div class="category-card">
+            <ul>
+              <li
+                th:each="mealCategory : ${mealCategories}"
+                th:id="'category_' + ${mealCategory.id}"
+                onclick="showMealItems(this)"
+              >
+                <span th:text="${mealCategory.name}"></span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Workout details for each category -->
+          <div
+            th:each="mealCategory : ${mealCategories}"
+            class="meal-item-details"
+            th:id="'mealItems_' + ${mealCategory.id}"
+            style="display: none"
+          >
+            <h4 th:text="${mealCategory.name}"></h4>
+            <div class="meal-list">
+              <div th:each="mealItem : ${mealCategory.mealItems}">
+                <button
+                  class="meal-list-item"
+                  th:text="${mealItem.name}"
+                  th:id="'mealItem_' + ${mealItem.id}"
+                  onclick="addMealPlan(this)"
+                ></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const times = [
+        { label: "Breakfast", value: "MEAL_1" },
+        { label: "MEAL_2", value: "MEAL_2" },
+        { label: "Lunch", value: "MEAL_3" },
+        { label: "MEAL_4", value: "MEAL_4" },
+        { label: "Dinner", value: "MEAL_5" },
+      ];
+
+      const timeSelector = `<select>${times.map(
+        (item) => `<option value='${item.value}'>${item.label}</option>`
+      )}<select>`;
+
+      // Function to show meal items based on the selected category and apply ash-colored border
+      function showMealItems(element) {
+        const categoryDetailsId = element.id;
+        const categoryId = categoryDetailsId.replace("category_", "");
+
+        // Hide all workout details
+        var details = document.getElementsByClassName("meal-item-details");
+        for (var i = 0; i < details.length; i++) {
+          details[i].style.display = "none";
+        }
+
+        // Show the selected category details
+        const mealItems = document.querySelector(`#mealItems_${categoryId}`);
+        mealItems.style.display = "block";
+      }
+
+      // Function to handle adding an meal plan
+      function addMealPlan(element) {
+        // Get the table body of the "Assigned Workouts" table
+        const tableBody = document.querySelector(
+          "#table-assigned-meal-plans tbody"
+        );
+
+        // Create a new row for the exercise
+        const newRow = document.createElement("tr");
+
+        // Create the cells
+        const mealNameCell = document.createElement("td");
+        const mealDescription = element.textContent;
+        mealNameCell.textContent = mealDescription; // Add the exercise name
+
+        // Make the potion cell editable
+        const potionCell = document.createElement("td");
+        potionCell.textContent = "_"; // Default value for potions
+        potionCell.contentEditable = true; // Allow inline editing
+
+        // Make the time cell editable
+        const timeCell = document.createElement("td");
+        timeCell.innerHTML = timeSelector; // Default value for time
+        // timeCell.contentEditable = true; // Allow inline editing
+
+        // Create a hidden input for the meal item
+        const mealItemInput = document.createElement("input");
+        const mealItemId = element.id.replace("mealItem_", "");
+        mealItemInput.type = "hidden";
+        mealItemInput.value = mealItemId; // Add the meal item id
+
+        // Create the Cancel button
+        const cancelButtonCell = document.createElement("td");
+        const cancelButton = document.createElement("button");
+        cancelButton.textContent = "Cancel"; // Button label
+        cancelButton.className = "cancel-button"; // Optional: add a class for styling
+        cancelButton.onclick = function () {
+          tableBody.removeChild(newRow); // Remove the row when the button is clicked
+        };
+
+        // Append all cells to the new row
+        newRow.appendChild(mealNameCell);
+        newRow.appendChild(potionCell);
+        newRow.appendChild(timeCell);
+        newRow.appendChild(mealItemInput);
+        cancelButtonCell.appendChild(cancelButton); // Append the button to its cell
+        newRow.appendChild(cancelButtonCell); // Append the cell with the button to the row
+
+        // Append the new row to the table body
+        tableBody.appendChild(newRow);
+      }
+
+      function submitMeals(event) {
+        event.preventDefault();
+
+        const tableBody = document.querySelector(".left-column table tbody");
+        const rows = tableBody.querySelectorAll("tr");
+        const mealPlans = [];
+        const memberId = document.querySelector("#memberId").value;
+
+        const meals = [];
+        rows.forEach((row) => {
+          const mealPlan = {
+            id: 0,
+            memberId: parseInt(memberId),
+            amount: row.cells[1].textContent,
+            mealType: row.cells[2].querySelector("select").value,
+            mealItemId: parseInt(row.querySelector('input[type="hidden"]').value),
+            mealPlanId: 0,
+          };
+
+          meals.push(mealPlan);
+        });
+
+        fetch(`/meals/assign?memberId=${memberId}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(meals),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to assign meals");
+            }
+            return response.json(); // Expect JSON response from server
+          })
+          .then((data) => {
+            displayMessage(
+              "success",
+              data.message || "Meals assigned successfully"
+            );
+          })
+          .catch((error) => {
+            console.error("Error assigning meals:", error);
+            displayMessage(
+              "error",
+              error.message || "An error occurred while assigning meals"
+            );
+          });
+      }
+
+      function displayMessage(type, message) {
+        const successMessageDiv = document.getElementById("successMessage");
+        const errorMessageDiv = document.getElementById("errorMessage");
+
+        if (type === "success") {
+          successMessageDiv.textContent = message;
+          successMessageDiv.classList.add("show");
+          successMessageDiv.style.display = "block";
+          errorMessageDiv.style.display = "none";
+        } else if (type === "error") {
+          errorMessageDiv.textContent = message;
+          errorMessageDiv.classList.add("show");
+          errorMessageDiv.style.display = "block";
+          successMessageDiv.style.display = "none";
+        }
+
+        setTimeout(() => {
+          successMessageDiv.classList.add("hide");
+          errorMessageDiv.classList.add("hide");
+
+          setTimeout(() => {
+            successMessageDiv.style.display = "none";
+            errorMessageDiv.style.display = "none";
+            successMessageDiv.classList.remove("show", "hide");
+            errorMessageDiv.classList.remove("show", "hide");
+          }, 500); // Matches the fade-out duration
+        }, 5500);
+      }
+    </script>
+  </body>
+</html>

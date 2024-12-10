@@ -1,0 +1,143 @@
+Things to add;
+===============
+
+
+@GetMapping("/coach_dashboard")
+@PostMapping("/member_history")
+
+coach --> view --> 	i) "Current Meal Plan" --> *button to  update meal plan
+			ii) "Update Meal Plan"
+
+
+@GetMapping("/dashboard")
+member --> dashboard area -->	i) Show "Next Workout day" (top left)
+				ii) Show "Current Level" (Beginner/Intermediate/Pro) -(top right)
+				iii) Show "Workout Plan"
+				iv) Show "Meal Plan"
+
+
+
+Meal Plan Details
+
+Items
+
+* Protein: Protein powders, egg whites, whole eggs, white meat, white fish, Greek yogurt
+* Starches: Brown rice, quinoa, yams, potatoes, oats, and whole-wheat pastas, bread, cereals, and wraps
+* Fruits/vegetables/legumes: Tropical fruits, berries, green/fibrous vegetables, beans
+* Oils: Olive oil, coconut oil, nuts/seeds
+
+Nutrition Tips
+
+
+
+
+[Beginner] Bodybuilder Meal Plan (https://www.bodybuilding.com/content/meal-plan-for-every-guy.html)
+Target: 2,500 calories, 218 g carbs, 218 g protein, 83 g fat
+
+This is a plan for new-to-the-system bodybuilders who want to stay healthy and power tough workouts. It is a template based on a moderately active 150-pound male, but could be bumped up or down in quantity to match your size and how many calories you need. It's low in carbs and very high in protein, while emphasizing nutrient-rich foods to improve overall health.
+
+Meal Template
+Meal 1: Breakfast (containing some starchy carbs)
+Meal 2: Snack (low-carb)
+Meal 3: Lunch (low-carb)
+Meal 4: Post-workout snack or shake (containing starchy carbs)
+Meal 5: Dinner (containing starchy carbs)
+
+Sample Day
+Meal 1
+
+Greek Yogurt
+1 1/2 cups
+
+Raspberries
+1/2 cup
+
+Granola
+(Vanilla Almond Crunch Bear Naked Granola.)
+1/3 cup
+
+Eggs
+(Omega-3 eggs)
+3
+
+
+Meal 2: Double Chocolate Cherry Smoothie
+
+Protein Powder
+2 scoops
+
+Coconut Milk
+1/4 cup
+
+Cherries
+3/4 cup
+
+Flaxseeds
+1 tbsp
+
+Cocoa Powder
+1 tbsp
+
+Ice
+3-4 cubes
+
+Water
+2-3 cups
+
+
+Meal 3: Bibb Lettuce Burger
+
+Lettuce
+2 leaves
+
+Ground Beef
+(95% lean)
+8 oz.
+
+Tomato
+2 slices
+
+Red Onion
+2 slices
+
+Ketchup
+1 tbsp
+
+Mayonnaise
+(canola mayonnaise)
+1 tbsp
+
+Green Beans
+3 cups
+
+
+Meal 4: Post-Workout Nutrition
+
+Protein Bar
+(or protein shake)
+1
+Meal 5: Shrimp With Spinach Salad & Brown Rice
+
+Shrimp
+6 oz.
+
+Brown Rice
+1/4 cup
+
+Spinach
+4 cups
+
+Feta Cheese
+1/4 cup
+
+Bell Pepper
+(red)
+1/2
+
+Olive Oil
+(extra virgin)
+2 tbsp
+
+
+Other links:
+https://www.muscleandfitness.com/nutrition/healthy-eating/beginner-bodybuilder-s-4-week-meal-plan/
